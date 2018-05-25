@@ -23,9 +23,22 @@ public class ServePeer extends Thread{
 			pw = new PrintWriter(os);
 			System.out.println("receiving the process");
 			String process = br.readLine();
-			//execute process and get output.
-			pw.write("output sent is" + process + "\n");
-		} catch (IOException e) {
+			//execute process and getting output.
+			Process proc  = Runtime.getRuntime().exec(process);
+			BufferedReader stdInput = new BufferedReader(new 
+			InputStreamReader(proc.getInputStream()));
+			BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+			// read the output from the command
+			String s = null;
+			while ((s = stdInput.readLine()) != null) {
+				pw.write(s+"\t");
+			}
+			// read any errors from the attempted command
+			while ((s = stdError.readLine()) != null) {
+				pw.write(s+"\t");
+			}
+		}
+		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

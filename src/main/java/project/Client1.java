@@ -8,15 +8,14 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-public class Client3{
+public class Client1 {
 
 	public static void main(String[] args) throws UnknownHostException ,Exception{
 		String ip  = "localhost";
-		String msg = "null";
 		String peer_ip = null;
 		int peer_port = 0;
 		int port = 9998;
-		ServerSocket ss2 = new ServerSocket(5557); //different numbers for different clients.
+		ServerSocket ss2 = new ServerSocket(5555); //different numbers for different clients.
 		Socket s = new Socket(ip,port);
 		BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 		OutputStreamWriter os = new OutputStreamWriter(s.getOutputStream());
@@ -47,6 +46,7 @@ public class Client3{
 					System.out.println("Got details");
 					//process these details and make a connection to that particular peer
 					System.out.println("Making connection with peer");
+					@SuppressWarnings("resource")
 					Socket peer_socket = new Socket(peer_ip,peer_port);
 					BufferedReader peer_br = new BufferedReader(new InputStreamReader(peer_socket.getInputStream()));
 					OutputStreamWriter 	peer_os = new OutputStreamWriter(peer_socket.getOutputStream());
@@ -54,7 +54,12 @@ public class Client3{
 					peer_pw.write(job + "\n");
 					peer_pw.flush();
 					String output = peer_br.readLine();    // get output from peer.
-					System.out.println("output:" + output );
+					String out[] = output.split("\t");
+					System.out.println("Output:");
+					for(String str :out) {
+						System.out.println(str);
+					}
+					
 				}
 					
 			}

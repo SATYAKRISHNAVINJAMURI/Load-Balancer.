@@ -11,15 +11,13 @@ import java.util.Scanner;
 public class ServeClient extends Thread{
 	Socket socket = null;
 	private String request = null;
-	ServeClient(Socket clientsocket){
+	public ServeClient(Socket clientsocket){
 		socket = clientsocket;
 	}
 	public void run() {
 		BufferedReader br = null;
 		OutputStreamWriter os = null;
 		PrintWriter pw = null;
-		String ip = null;  //destination ip for process submission
-		String port = null; //destination port for process submission
 		Scanner scan = new Scanner(System.in);
 		try {
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -28,16 +26,17 @@ public class ServeClient extends Thread{
 			System.out.println("Waiting for the request");
 			request = br.readLine();
 			System.out.println("Received command "+ request);
-		} catch (IOException e3) {
+		}
+		catch (IOException e3) {
 			// TODO Auto-generated catch block
 			e3.printStackTrace();
 		}
 		while(!request.equals("quit")) {
 			if(request.equals("getsys")){
-					/*Check all threshold of all the clients.
+				/*Check all threshold of all the clients.
 				if threshold is less then get that system ip and port number where the
 				peer can be contacted to server another peer.
-				*/
+				 */
 				try {
 					pw.write("localhost\n");
 					pw.flush();
@@ -49,13 +48,14 @@ public class ServeClient extends Thread{
 					e.printStackTrace();
 				}
 				
-				}
+			}
 			else {
 				System.out.println("Bad Protocol request");
 			}
 			try {
 				request = br.readLine();
-			} catch (IOException e) {
+			} 
+			catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
